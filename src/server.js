@@ -27,6 +27,7 @@ app.set('view engine', 'pug')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('src/public'))
+app.use('/storage', express.static('src/storage/public'))
 app.use(routesLogger)
 
 // Session

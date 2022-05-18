@@ -1,4 +1,4 @@
-const { Product} = require('../models')
+const { Product } = require('../models')
 const { Cart } = require('../models')
 
 class CartController {
@@ -28,8 +28,7 @@ class CartController {
 
   async show(req, res) {
     try {
-      const { id } = req.params
-      const cart = await Cart.getById(id)
+      const cart = await Cart.getByUserId(req.user.id)
       res.json(cart)
     }
     catch (e) {
@@ -40,14 +39,14 @@ class CartController {
 
   async addProduct(req, res) {
     try {
-      const { id, productId } = req.params
-      const { products } = await Cart.getById(id)
+      const { productId } = req.params
+      const { _id, products } = await Cart.getByUserId(req.user.id)
 
       const product = await Product.getById(productId)
 
       products.push(product)
 
-      await Cart.update(id, { products })
+      await Cart.update(_id, { products })
       res.sendStatus(201)
     }
     catch (e) {
@@ -58,9 +57,11 @@ class CartController {
 
   async deleteProduct(req, res) {
     try {
-      const { id, productId } = req.params
-      const { products } = await Cart.getById(id)
-      const index = products.findIndex(i => i.id == productId)
+      const { productId } = req.params
+      const { _id, products } = await Cart.getByUserId(req.user.id)
+      const index = products.findIndex(i => i._id == productId)
+
+      console.log(productId, index)
       
       if (index == -1) {
         res.json({ error: 'Product not found' })
@@ -68,7 +69,7 @@ class CartController {
 
       products.splice(index, 1)
 
-      await Cart.update(id, { products })
+      await Cart.update(_id, { products })
       res.sendStatus(200)
     }
     catch (e) {

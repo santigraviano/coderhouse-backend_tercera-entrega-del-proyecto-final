@@ -26,5 +26,21 @@ module.exports = {
   },
   session: {
     maxAge: 600000
+  },
+  mail: {
+    gmail: {
+      account: process.env.GMAIL_APP_ACCOUNT,
+      password: process.env.GMAIL_APP_PASSWORD
+    }
+  },
+  twilio: {
+    sid: process.env.TWILIO_SID,
+    authToken: process.env.TWILIO_AUTH_TOKEN,
+    phoneNumber: process.env.TWILIO_PHONE_NUMBER,
+    whatsappNumber: process.env.TWILIO_WP_NUMBER
+  },
+  admin: {
+    email: process.env.ADMIN_EMAIL,
+    phone: process.env.ADMIN_PHONE
   }
 }

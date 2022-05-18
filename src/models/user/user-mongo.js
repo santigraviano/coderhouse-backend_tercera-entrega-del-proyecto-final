@@ -7,6 +7,10 @@ module.exports = class UserMongo extends DB {
       password: String,
       firstname: String,
       lastname: String,
+      address: String,
+      age: Number,
+      cellphone: String,
+      avatar: String,
       timestamp: { type: Number, default: Date.now() }
     })
   }
